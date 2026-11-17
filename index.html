@@ -1,22 +1,129 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#171715">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>ACKERMAN — Essentials, cut in concrete light</title>
+  <meta name="description" content="ACKERMAN. Essentials, cut in concrete light." />
+  <meta name="theme-color" content="#0E0D0C" />
 
-    <title>ACKERMAN — Essential Clothing</title>
+  <!--
+    INTRO FLAG
+    Runs before first paint. Marks the page for the intro only when the visitor has not
+    seen it in this browser tab session and has not requested reduced motion.
+    Key: sessionStorage 'ackerman-intro-seen' (set by script.js when the intro starts).
+  -->
+  <script>
+    (function () {
+      var root = document.documentElement;
+      var seen = false;
+      var reduce = false;
+      try { seen = sessionStorage.getItem('ackerman-intro-seen') === '1'; } catch (e) {}
+      try { reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+      if (!seen && !reduce) root.classList.add('intro-pending');
+    })();
+  </script>
 
-    <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600&family=Cormorant+Garamond:ital,wght@1,400;1,500&family=Inter:wght@400;500&family=UnifrakturMaguntia&display=swap" />
+
+  <link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
 
-    <main id="app">
-        <h1>ACKERMAN</h1>
-        <p>WEAR YOUR PRESENCE.</p>
-    </main>
+  <a class="skip-link" href="#showroom">Skip to showroom</a>
 
-    <script src="script.js"></script>
+  <!-- NAVIGATION -->
+  <header class="nav" id="nav">
+    <a class="nav__logo" href="#top" aria-label="ACKERMAN, back to top">
+      <!--
+        NAV LOGO
+        Currently the blackletter wordmark as text.
+        To use the custom SVG later: place the <svg> inside this span (replacing the text)
+        and keep the class "nav__logo-text". The hero wordmark uses the same approach (see below).
+      -->
+      <span class="nav__logo-text">ACKERMAN</span>
+    </a>
+
+    <nav class="nav__links" aria-label="Primary">
+      <a href="#showroom">Showroom</a>
+      <a href="#lookbook">Lookbook</a>
+      <a href="#atelier">Atelier</a>
+      <a href="#bag" class="nav__bag">Bag (0)</a>
+    </nav>
+
+    <button class="nav__toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="navPanel">Menu</button>
+  </header>
+
+  <!-- MOBILE MENU PANEL -->
+  <div class="nav__panel" id="navPanel">
+    <a href="#showroom">Showroom</a>
+    <a href="#lookbook">Lookbook</a>
+    <a href="#atelier">Atelier</a>
+    <a href="#bag">Bag (0)</a>
+  </div>
+
+  <!-- CINEMATIC HERO -->
+  <section class="hero" id="top" aria-labelledby="heroTitle">
+
+    <!-- Atmosphere layers (decorative) -->
+    <div class="hero__wall" aria-hidden="true"></div>
+    <div class="hero__grain" aria-hidden="true"></div>
+    <div class="hero__beam" aria-hidden="true"><div class="hero__beam-core"></div></div>
+    <div class="hero__hairline" aria-hidden="true"></div>
+
+    <!--
+      MODEL PHOTOGRAPHY — PLACEHOLDER
+      To swap in ACKERMAN editorial photography later:
+        1. Add the image to /assets/, for example /assets/hero-model.jpg (portrait, roughly 4:5, at least 1600px tall).
+        2. Delete the <div class="hero__placeholder"> block below.
+        3. Insert: <img class="hero__photo" src="assets/hero-model.jpg" alt="Describe the image" />
+      Nothing else changes. The animation and tilt hook into .hero__photo automatically.
+    -->
+    <figure class="hero__media">
+      <div class="hero__tilt">
+        <div class="hero__placeholder" role="img" aria-label="Placeholder for ACKERMAN editorial photograph">
+          <span class="hero__placeholder-note">Placeholder · editorial photograph</span>
+        </div>
+      </div>
+    </figure>
+
+    <!--
+      WORDMARK
+      Currently Google Font UnifrakturMaguntia, split into letters by script.js.
+      To use the custom SVG later: replace the text inside the h1 with an inline <svg>,
+      and set data-logo="svg". Keep id="heroTitle" and aria-labelledby on the section.
+      Remember to apply the same SVG to .nav__logo-text.
+    -->
+    <div class="hero__content">
+      <h1 class="hero__wordmark" id="heroTitle" data-logo="text">ACKERMAN</h1>
+      <p class="hero__tagline">Essentials, cut in concrete light.</p>
+    </div>
+
+    <p class="hero__label hero__label--tl">SS27</p>
+    <p class="hero__label hero__label--br">Men / Women</p>
+
+    <a class="hero__scroll" href="#showroom">
+      <span class="hero__scroll-line" aria-hidden="true"></span>
+      Scroll
+    </a>
+  </section>
+
+  <!-- SHOWROOM (placeholder — the next build) -->
+  <main>
+    <section class="showroom" id="showroom" aria-labelledby="showroomTitle">
+      <p class="showroom__eyebrow">The Showroom</p>
+      <h2 class="showroom__title" id="showroomTitle">The rail is being hung.</h2>
+      <p class="showroom__note">Twelve garments, six for him and six for her, arrive in the next build.</p>
+    </section>
+  </main>
+
+  <!-- GSAP + ScrollTrigger (pinned versions, cdnjs) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <script src="script.js"></script>
 </body>
 </html>
